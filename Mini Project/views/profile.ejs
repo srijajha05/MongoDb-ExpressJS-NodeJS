@@ -12,8 +12,13 @@
         <div class="w-full flex justify-end">
             <a class="bg-red-500 rounded-md px-3 py-2 text-sm mb-5 inline-block" href="/logout">Logout</a>
         </div>
-        <h3 class="text-3xl mb-2"><span class="font-light">Hello,</span> <%= user.name %> </h3>
-        <h5 class="mb-5">Create a new post</h5>
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-md">
+                <img class="w-full h-full object-cover overflow" src="/images/uploads/<%= user.profilepic %>" alt="">
+            </div>
+            <h3 class="text-3xl mb-2"><span class="font-light">Hello,</span> <%= user.name %> </h3>
+        </div>
+        <h5 class="mb-5 mt-3">Create a new post</h5>
         <form action="/post" method="post">
             <textarea placeholder="what's on your mind" class="p-3 w-1/3 block mb-2 resize-none outline-none bg-transparent border-2 border-zinc-800 rounded-md" name="content"></textarea>
             <input class="px-3 py-2 w-40 bg-blue-500 block rounded-md text-sm" type="submit" value="Create Post">
@@ -25,9 +30,12 @@
                     <div class="post p-4 w-1/3 mb-5 bg-zinc-600 border-[1px] border-zinc-800 rounded-md">
                         <h4 class="text-blue-500 mb-2">@ <%= user.username %></h4>
                         <p class="text-sm tracking-tight"><%= post.content %></p>
+                        <small class="inline-block mt-2"><%= post.likes.length%>likes</small>
                         <div class="buttons flex gap-4">
-                            <a class="text-blue-500" href="">Like</a>
-                            <a class="text-blue-600" href="">edit</a>
+                            <a class="text-blue-500" href="/like/<%= post._id%>">
+                                <%= post.likes.indexOf(user._id) ? "Like" :"Unlike" %>
+                            </a>
+                            <a class="text-blue-600" href="/edit/<%= post._id%>">edit</a>
                         </div>
                     </div> 
                 <% }) %>
